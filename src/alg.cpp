@@ -19,15 +19,12 @@ int countPairs2(int* arr, int len, int value) {
     while (arr[right] > value) {
         right = right - 1;
     }
-    while (left <= right) {
-        int sum = arr[left] + arr[right];
-        if (sum == value) {
-            count++;
-            right--;
-        } else if (sum < value) {
-            left++;
-        } else {
-            right--;
+    for (int i = 0; i < right; i++) {
+        for (int j = right; j > i; j--) {
+            int sum = arr[i] + arr[j];
+            if (sum == value) {
+                count++;
+            }
         }
     }
     return count;
@@ -67,7 +64,7 @@ int countPairs3(int* arr, int len, int value) {
     int count = 0;
     for (int i = 0; i < len; i++) {
         int second = value - arr[i];
-        count += cbinsearch(arr, len, second);
+        count += cbinsearch(&arr[i + 1], len - i - 1, second);
     }
-    return count/2;
+    return count;
 }
